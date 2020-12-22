@@ -14,9 +14,10 @@ class Hat:
     def draw(self, numToDraw):
         outp = []
         if numToDraw > len(self.contents):
-            outp = self.contents[::]
-            self.contents = []
-            return outp
+            # outp = self.contents[::]
+            # self.contents = []
+            # return outp
+            return self.contents
         else:
             for _ in range(numToDraw):
                 outp.append(self.contents.pop(
@@ -25,4 +26,14 @@ class Hat:
 
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-    pass
+    count_balls = 0
+    count_got_it = 0
+    for _ in range(num_experiments):
+        hat_outp = hat.draw(num_balls_drawn)
+        for b in expected_balls:
+            if hat_outp.count(b) == expected_balls[b]:
+                count_balls += 1
+        if count_balls == len(expected_balls):
+            count_got_it += 1
+        count_balls = 0
+    return count_got_it / num_experiments
